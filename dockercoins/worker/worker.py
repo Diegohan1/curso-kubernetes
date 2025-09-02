@@ -23,7 +23,7 @@ def get_random_bytes():
 
 
 def hash_bytes(data):
-    r = requests.post("http://hasher/",
+    r = requests.post("http://hasher:80/",
                       data=data,
                       headers={"Content-Type": "application/octet-stream"})
     hex_hash = r.text
@@ -67,4 +67,15 @@ if __name__ == "__main__":
             log.error("Waiting 10s and restarting.")
             time.sleep(10)
 
+            
+max_retries = 10
+for i in range(max_retries):
+    try:
+        r = requests.post("http://hasher:80/", data=data, headers={"Content-Type": "application/octet-stream"})
+        break  # Si funciona, salir del loop
+    except requests.exceptions.ConnectionError:
+        print(f"Hasher no listo, reintentando ({i+1}/{max_retries})...")
+        time.sleep(2)
+else:
+    raise RuntimeError("Hasher no disponible después de varios intentos")
 

@@ -1,0 +1,13 @@
+{
+  "name": "dockercoins-webui",
+  "version": "1.0.0",
+  "description": "Web UI para Dockercoins",
+  "main": "webui.js",
+  "scripts": {
+    "start": "node webui.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "redis": "^2.8.0"
+  }
+}

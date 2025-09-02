@@ -4,23 +4,26 @@ services:
   rng:
     build: rng
     ports:
-    - "8001:80"
+      - "8001:80"
 
   hasher:
     build: hasher
     ports:
-    - "8002:80"
+      - "8002:80"
 
   webui:
     build: webui
     ports:
-    - "8000:80"
+      - "8000:80"
     volumes:
-    - "./webui/files/:/files/"
+      - "./webui/files/:/app/files/"  # <- Aquí está la corrección
 
   redis:
     image: redis
 
   worker:
     build: worker
-
+    depends_on:
+      - rng
+      - hasher
+      - redis
